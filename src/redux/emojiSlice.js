@@ -2,10 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchCategoryDetails = createAsyncThunk('emoji/fetchCategoryDetails', async (category) => {
-  const response = await axios.get(`https://emojihub.yurace.pro/api/category/${category}`);
-  return response.data;
-});
+export const fetchAllEmojis = createAsyncThunk('emoji/fetchAllEmojis', async () => {
+    const response = await axios.get('https://emojihub.yurace.pro/api/all');
+    return response.data;
+  });
+  
+  export const fetchCategoryDetails = createAsyncThunk('emoji/fetchCategoryDetails', async ({ category, group }) => {
+    let endpoint = `https://emojihub.yurace.pro/api/${group ? 'group' : 'category'}/${group || category}`;
+    const response = await axios.get(endpoint);
+    return response.data;
+  });
 
 const emojiSlice = createSlice({
   name: 'emoji',
@@ -13,6 +19,7 @@ const emojiSlice = createSlice({
     categories: [],
     selectedCategory: null,
     categoryDetails: null,
+    allEmojis: []
   },
   reducers: {
     setCategories: (state, action) => {

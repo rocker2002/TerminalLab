@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchCategoryDetails, setCategoryDetails, selectEmoji } from '../redux/emojiSlice';
-//import axios from 'axios';
+import { fetchCategoryDetails, setCategoryDetails } from '../redux/emojiSlice';
 
 const Details = () => {
   const dispatch = useDispatch();
@@ -12,11 +11,11 @@ const Details = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-      dispatch(fetchCategoryDetails(selectedCategory));
+      dispatch(fetchCategoryDetails({ category: selectedCategory }));
     }
 
     return () => {
-      dispatch(setCategoryDetails(selectEmoji));
+      dispatch(setCategoryDetails(null));
     };
   }, [dispatch, selectedCategory]);
 
@@ -30,10 +29,10 @@ const Details = () => {
       <button onClick={handleBackClick}>Back</button>
       {categoryDetails && (
         <div>
-          {}
-          {}
-          <p>Views: {categoryDetails.views}</p>
-          {}
+          <p>Category: {categoryDetails.category}</p>
+          <p>Group: {categoryDetails.group}</p>
+          <p>HTML Code: {categoryDetails.htmlCode}</p>
+          <p>Unicode: {categoryDetails.unicode}</p>
         </div>
       )}
     </div>
@@ -41,3 +40,4 @@ const Details = () => {
 };
 
 export default Details;
+

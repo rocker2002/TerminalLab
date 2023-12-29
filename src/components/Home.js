@@ -10,7 +10,7 @@ const Home = () => {
   const categories = useSelector((state) => state.emoji.categories);
 
   useEffect(() => {
-    axios.get('https://emojihub.yurace.pro/api/category')
+    axios.get('https://emojihub.yurace.pro/api/all/category/')
       .then((response) => {
         dispatch(setCategories(response.data));
       })
@@ -21,7 +21,7 @@ const Home = () => {
 
   const handleCategoryClick = (category) => {
     dispatch(selectCategory(category));
-    history.push('/details');
+    history.push(`/category/${category}`); 
   };
 
   return (
